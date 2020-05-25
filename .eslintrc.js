@@ -69,8 +69,8 @@ module.exports = {
 
     'vue/require-default-prop': 'off',
     'vue/max-attributes-per-line': ['error', {
-      singleline: 5,
-      multiline: { max: 1, allowFirstLine: false },
+      singleline: 8,
+      multiline: { max: 4, allowFirstLine: false },
     }],
     'vue/name-property-casing': ['error', 'kebab-case'],
     'vue/prop-name-casing': 'off',
