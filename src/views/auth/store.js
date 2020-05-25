@@ -1,18 +1,28 @@
+import api from '@/api/Api';
 import { createNamespacedHelpers } from 'vuex';
 
 
 const timeout = () => new Promise((resolve) => setTimeout(resolve, 1500));
 
+const TYPES = Object.freeze({
+  SET_TOKEN: 'SET_TOKEN',
+});
+
 const createStore = () => ({
+  email: '',
+  // password: '',
+  token: '',
 });
 
 const actions = {
-  async login(context, params) {
-    await timeout(params);
+  async login({ commit }, params) {
+    const { data } = await api.login(params.email, params.password, true);
+    commit(TYPES.SET_TOKEN, data);
   },
 
-  async logon(context, params) {
-    await timeout(params);
+  async logon({ commit }, params) {
+    const { data } = await api.logon(params.email, params.password, true);
+    commit(TYPES.SET_TOKEN, data);
   },
 
   async resetPasswordWithEmail(context, params) {
@@ -25,6 +35,10 @@ const actions = {
 };
 
 const mutations = {
+  [TYPES.SET_TOKEN](state, payload) {
+    state.token = payload.idToken;
+    state.userId = payload.localId;
+  },
 };
 
 const crudModule = {
