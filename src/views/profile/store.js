@@ -19,6 +19,7 @@ const actions = {
       commit(TYPES.SET_DATA, user);
     },
   },
+
   logout: {
     root: true,
     handler: ({ commit }) => commit(TYPES.SET_DATA, {}),

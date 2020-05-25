@@ -30,7 +30,7 @@ const actions = {
     commit(TYPES.SET_TOKEN, response);
   },
 
-  async logon({ commit }, params) {
+  async logon({ commit, dispatch }, params) {
     const data = {
       email: params.email,
       password: params.password,
@@ -39,12 +39,23 @@ const actions = {
     };
 
     const response = await api.logon(data);
+
     commit(TYPES.SET_TOKEN, response);
+    dispatch('sendEmailVerification');
   },
 
   logout: {
     root: true,
     handler: ({ commit }) => commit(TYPES.REMOVE_TOKEN),
+  },
+
+  sendEmailVerification({ state }) {
+    return api.sendEmailVerification(state.idToken);
+  },
+
+  async confirmEmailVerification({ dispatch }, params) {
+    const response = await api.confirmEmailVerification(params);
+    dispatch('getProfile', response, { root: true });
   },
 
   async resetPasswordWithEmail(context, params) {

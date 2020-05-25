@@ -40,6 +40,17 @@ class ApiService {
     const data = { idToken, ...params };
     return this.api.post('accounts:update', data);
   }
+
+  sendEmailVerification(idToken) {
+    const data = { idToken, requestType: 'VERIFY_EMAIL' };
+    const headers = { 'X-Firebase-Locale': 'ru' };
+    return this.api.post('accounts:sendOobCode', data, { headers });
+  }
+
+  confirmEmailVerification(params) {
+    const data = { ...params };
+    return this.api.post('accounts:update', data);
+  }
 }
 
 export default new ApiService(process.env.VUE_APP_API_KEY);
