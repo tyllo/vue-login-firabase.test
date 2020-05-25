@@ -1,19 +1,21 @@
 import { createNamespacedHelpers } from 'vuex';
 import api from '@/api/Api';
+import { CookiesService } from '@/helpers/cookies.service';
 
 
 const timeout = () => new Promise((resolve) => setTimeout(resolve, 1500));
 
 const TYPES = Object.freeze({
   SET_TOKEN: 'SET_TOKEN',
+  REMOVE_TOKEN: 'REMOVE_TOKEN',
 });
 
 const createState = () => ({
-  idToken: '',
-  email: '',
-  refreshToken: '',
-  expiresIn: '',
-  localId: '',
+  idToken: CookiesService.idToken.get(),
+  email: CookiesService.email.get(),
+  refreshToken: CookiesService.refreshToken.get(),
+  expiresIn: CookiesService.expiresIn.get(),
+  localId: CookiesService.localId.get(),
 });
 
 const actions = {
@@ -42,7 +44,7 @@ const actions = {
 
   logout: {
     root: true,
-    handler: ({ commit }) => commit(TYPES.SET_TOKEN, {}),
+    handler: ({ commit }) => commit(TYPES.REMOVE_TOKEN),
   },
 
   async resetPasswordWithEmail(context, params) {
@@ -57,11 +59,31 @@ const actions = {
 const mutations = {
   [TYPES.SET_TOKEN](state, payload) {
     state.idToken = payload.idToken;
-    state.displayName = payload.displayName;
     state.email = payload.email;
     state.refreshToken = payload.refreshToken;
     state.expiresIn = payload.expiresIn;
     state.localId = payload.localId;
+
+    const expires = `${state.expiresIn}s`;
+    CookiesService.idToken.set(state.idToken, expires);
+    CookiesService.email.set(state.email, expires);
+    CookiesService.refreshToken.set(state.refreshToken, expires);
+    CookiesService.expiresIn.set(state.expiresIn, expires);
+    CookiesService.localId.set(state.localId, expires);
+  },
+
+  [TYPES.REMOVE_TOKEN](state) {
+    state.idToken = null;
+    state.email = null;
+    state.refreshToken = null;
+    state.expiresIn = null;
+    state.localId = null;
+
+    CookiesService.idToken.remove();
+    CookiesService.email.remove();
+    CookiesService.refreshToken.remove();
+    CookiesService.expiresIn.remove();
+    CookiesService.localId.remove();
   },
 };
 

@@ -52,12 +52,13 @@ export default {
       if (!isAuthorized) return;
 
       this.isLoadingProfile = true;
+
       try {
         await this.getProfile();
-      } catch (e) {
-        // eslint-disable-next-line
-        console.log(e);
+      } catch {
+        this.onLogout();
       }
+
       this.isLoadingProfile = false;
     },
     async onLogout() {

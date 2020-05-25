@@ -2,7 +2,7 @@
   <v-layout style="height: 100%" class="d-flex justify-center align-center">
     <div class="text-center">
       <h2 class="mb-6">
-        Добрый день, {{ profile.displayName }}
+        Добрый день, {{ profile.displayName || profile.email }}
       </h2>
 
       <p>

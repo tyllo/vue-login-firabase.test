@@ -7,7 +7,7 @@ const TYPES = Object.freeze({
 });
 
 const createState = () => ({
-  profile: null,
+  profile: {},
 });
 
 const actions = {
@@ -21,7 +21,7 @@ const actions = {
   },
   logout: {
     root: true,
-    handler: ({ commit }) => commit(TYPES.SET_DATA, null),
+    handler: ({ commit }) => commit(TYPES.SET_DATA, {}),
   },
 
 };
