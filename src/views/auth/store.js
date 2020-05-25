@@ -1,5 +1,5 @@
-import api from '@/api/Api';
 import { createNamespacedHelpers } from 'vuex';
+import api from '@/api/Api';
 
 
 const timeout = () => new Promise((resolve) => setTimeout(resolve, 1500));
@@ -8,21 +8,41 @@ const TYPES = Object.freeze({
   SET_TOKEN: 'SET_TOKEN',
 });
 
-const createStore = () => ({
+const createState = () => ({
+  idToken: '',
   email: '',
-  // password: '',
-  token: '',
+  refreshToken: '',
+  expiresIn: '',
+  localId: '',
 });
 
 const actions = {
   async login({ commit }, params) {
-    const { data } = await api.login(params.email, params.password, true);
-    commit(TYPES.SET_TOKEN, data);
+    const data = {
+      email: params.email,
+      password: params.password,
+      returnSecureToken: true,
+    };
+
+    const response = await api.login(data);
+    commit(TYPES.SET_TOKEN, response);
   },
 
   async logon({ commit }, params) {
-    const { data } = await api.logon(params.email, params.password, true);
-    commit(TYPES.SET_TOKEN, data);
+    const data = {
+      email: params.email,
+      password: params.password,
+      displayName: `${params.first_name} ${params.last_name}`,
+      returnSecureToken: true,
+    };
+
+    const response = await api.logon(data);
+    commit(TYPES.SET_TOKEN, response);
+  },
+
+  logout: {
+    root: true,
+    handler: ({ commit }) => commit(TYPES.SET_TOKEN, {}),
   },
 
   async resetPasswordWithEmail(context, params) {
@@ -36,14 +56,18 @@ const actions = {
 
 const mutations = {
   [TYPES.SET_TOKEN](state, payload) {
-    state.token = payload.idToken;
-    state.userId = payload.localId;
+    state.idToken = payload.idToken;
+    state.displayName = payload.displayName;
+    state.email = payload.email;
+    state.refreshToken = payload.refreshToken;
+    state.expiresIn = payload.expiresIn;
+    state.localId = payload.localId;
   },
 };
 
 const crudModule = {
   namespaced: true,
-  store: createStore,
+  state: createState,
   actions,
   mutations,
 };

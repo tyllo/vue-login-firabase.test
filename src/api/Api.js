@@ -23,14 +23,22 @@ class ApiService {
     this.api = axiosInstance;
   }
 
-  logon(email, password, returnSecureToken) {
-    const data = { email, password, returnSecureToken };
-    return this.api.post('accounts:signUp', data);
+  logon(params) {
+    return this.api.post('accounts:signUp', params);
   }
 
-  login(email, password, returnSecureToken) {
-    const data = { email, password, returnSecureToken };
+  login(data) {
     return this.api.post('accounts:signInWithPassword', data);
+  }
+
+  getUser(idToken) {
+    const data = { idToken };
+    return this.api.post('accounts:lookup', data);
+  }
+
+  updateUser(idToken, params) {
+    const data = { idToken, ...params };
+    return this.api.post('accounts:update', data);
   }
 }
 

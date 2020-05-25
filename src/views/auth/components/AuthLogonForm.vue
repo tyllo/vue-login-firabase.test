@@ -13,20 +13,20 @@
       <v-row>
         <v-col cols="6" class="py-0">
           <v-text-field
-            v-model="form.name"
+            v-model="form.first_name"
             :rules="[rules.required]"
             label="Имя"
-            name="name"
+            name="first_name"
             outlined
           />
         </v-col>
 
         <v-col cols="6" class="py-0">
           <v-text-field
-            v-model="form.surname"
+            v-model="form.last_name"
             :rules="[rules.required]"
             label="Фамилия"
-            name="surname"
+            name="last_name"
             outlined
           />
         </v-col>
@@ -76,8 +76,8 @@ import AuthLayoutForm from './AuthLayoutForm.vue';
 
 
 const createDefaultData = () => ({
-  name: '',
-  surname: '',
+  first_name: '',
+  last_name: '',
   email: '',
   password: '',
   password_repeat: '',

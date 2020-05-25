@@ -24,6 +24,13 @@
           width="100"
         />
       </div>
+
+      <v-spacer />
+
+
+      <v-btn icon @click="$emit('logout')">
+        <v-icon>mdi-export</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <v-content>

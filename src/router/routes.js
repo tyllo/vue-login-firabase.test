@@ -1,4 +1,5 @@
 import AuthRoutes from '@/views/auth/routes';
+import ProfileRoutes from '@/views/profile/routes';
 import HomeRoutes from '@/views/home/routes';
 import ErrorRoutes from '@/views/errors/routes';
 
@@ -18,6 +19,7 @@ export const createRoutes = (options) => createGetRoutes(options, [
   HomeRoutes,
 
   AuthRoutes,
+  ProfileRoutes,
 
   // must be last, because in error - `*` route
   ErrorRoutes,
