@@ -16,7 +16,7 @@
 
       <text-field-password
         v-model="form.password"
-        :rules="[rules.required, rules.min]"
+        :rules="[rules.required, rules.min, rules.password]"
         label="Пароль"
         hint="Не менее 8 символов"
         name="password"

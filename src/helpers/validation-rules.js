@@ -9,4 +9,6 @@ export const min = (value) => value?.length >= MIN_PASSWORD_LENGTH || `Мини�
 
 export const email = (value) => /.+@.+/.test(value) || ('Введите валидный адрес электронной почты');
 
+export const password = (value) => /[A-Z0-9]$/.test(value) || 'Можно использовать только прописные буквы и цифры';
+
 export const password_repeat = (pwd1, pwd2) => pwd1 === pwd2 || 'Пароли не совпадают';

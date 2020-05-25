@@ -1,7 +1,7 @@
 <template>
   <auth-layout-form
     title="Сбросить пароль"
-    submit-text="Сбросить"
+    :submit-text="success ? 'Вернуться' : 'Сбросить'"
     :loading="loading"
     @submit="onSubmit"
   >
@@ -9,11 +9,16 @@
       <v-text-field
         v-model="form.username"
         :rules="[rules.required, rules.email]"
+        :disabled="success"
         label="Адрес эл. почты"
         name="username"
         outlined
       />
     </v-form>
+
+    <div v-if="success">
+      Пароль сброшен, проверьте свою почту
+    </div>
   </auth-layout-form>
 </template>
 
@@ -28,11 +33,12 @@ const createDefaultData = () => ({
 });
 
 export default {
-  name: 'auth-reset-password-form',
+  name: 'auth-reset-password-with-email',
   components: {
     AuthLayoutForm,
   },
   props: {
+    success: Boolean,
     loading: Boolean,
   },
   data: () => ({
@@ -41,6 +47,11 @@ export default {
   }),
   methods: {
     onSubmit() {
+      if (this.success) {
+        this.$emit('go-to-login');
+        return;
+      }
+
       const isValid = this.$refs.form.validate();
       if (!isValid) {
         return;

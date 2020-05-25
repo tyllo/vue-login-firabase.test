@@ -1,7 +1,9 @@
 <template>
   <div>
-    <auth-logon-form
+    <auth-reset-password-with-email
+      :success="isSuccess"
       :loading="isLoading"
+      @go-to-login="onGoToLogin"
       @submit="onSubmit"
     />
 
@@ -16,28 +18,32 @@
 <script>
 import { authStoreHelper } from './store';
 
-import AuthLogonForm from './components/AuthLogonForm.vue';
+import AuthResetPasswordWithEmail from './components/AuthResetPasswordWithEmail.vue';
 import AuthHelper from './components/AuthHelper.vue';
 
 
 export default {
-  name: 'view-auth-logon',
+  name: 'view-auth-reset-password-with-email',
   components: {
-    AuthLogonForm,
+    AuthResetPasswordWithEmail,
     AuthHelper,
   },
   data: () => ({
     isLoading: false,
+    isSuccess: false,
   }),
   methods: {
-    ...authStoreHelper.mapActions(['logon']),
+    ...authStoreHelper.mapActions(['resetPasswordWithEmail']),
 
+    onGoToLogin() {
+      this.$router.push({ name: 'auth.login' });
+    },
     async onSubmit(form) {
       this.isLoading = true;
 
       try {
-        await this.logon(form);
-        this.$router.push({ name: 'home' });
+        await this.resetPasswordWithEmail(form);
+        this.isSuccess = true;
       } catch (e) {
         // eslint-disable-next-line
         console.log(e);

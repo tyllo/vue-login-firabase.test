@@ -3,7 +3,6 @@
     <auth-login-form
       :loading="isLoading"
       @submit="onSubmit"
-      @reset-password="onResetPassword"
     />
 
     <auth-helper
@@ -15,6 +14,8 @@
 </template>
 
 <script>
+import { authStoreHelper } from './store';
+
 import AuthLoginForm from './components/AuthLoginForm.vue';
 import AuthHelper from './components/AuthHelper.vue';
 
@@ -29,12 +30,19 @@ export default {
     isLoading: false,
   }),
   methods: {
-    onResetPassword() {
-      //
-    },
-    async onSubmit() {
+    ...authStoreHelper.mapActions(['login']),
+
+    async onSubmit(form) {
       this.isLoading = true;
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      try {
+        await this.login(form);
+        this.$router.push({ name: 'home' });
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log(e);
+      }
+
       this.isLoading = false;
     },
   },
