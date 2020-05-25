@@ -3,15 +3,16 @@
     title="Сбросить пароль"
     :submit-text="success ? 'Вернуться' : 'Сбросить'"
     :loading="loading"
+    :error-response="errorResponse"
     @submit="onSubmit"
   >
     <v-form ref="form">
       <v-text-field
-        v-model="form.username"
+        v-model="form.email"
         :rules="[rules.required, rules.email]"
         :disabled="success"
         label="Адрес эл. почты"
-        name="username"
+        name="email"
         outlined
       />
     </v-form>
@@ -29,7 +30,7 @@ import AuthLayoutForm from './AuthLayoutForm.vue';
 
 
 const createDefaultData = () => ({
-  username: '',
+  email: '',
 });
 
 export default {
@@ -40,6 +41,7 @@ export default {
   props: {
     success: Boolean,
     loading: Boolean,
+    errorResponse: String,
   },
   data: () => ({
     form: createDefaultData(),

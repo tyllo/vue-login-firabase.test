@@ -1,8 +1,8 @@
 <template>
   <div>
     <auth-reset-password-with-hash
-      :success="isSuccess"
       :loading="isLoading"
+      :error-response="errorResponse"
       @submit="onSubmit"
     />
 
@@ -16,6 +16,7 @@
 
 <script>
 import { authStoreHelper } from './store';
+import { getMessage } from '@/helpers/getMessage';
 
 import AuthResetPasswordWithHash from './components/AuthResetPasswordWithHash.vue';
 import AuthHelper from './components/AuthHelper.vue';
@@ -29,7 +30,7 @@ export default {
   },
   data: () => ({
     isLoading: false,
-    isSuccess: false,
+    errorResponse: null,
   }),
   methods: {
     ...authStoreHelper.mapActions(['resetPasswordWithHash']),
@@ -41,8 +42,7 @@ export default {
         await this.resetPasswordWithHash(form);
         this.$router.push({ name: 'home' });
       } catch (e) {
-        // eslint-disable-next-line
-        console.log(e);
+        this.errorResponse = getMessage(e);
       }
 
       this.isLoading = false;

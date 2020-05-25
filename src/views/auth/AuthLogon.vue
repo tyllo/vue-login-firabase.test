@@ -15,6 +15,7 @@
 
 <script>
 import { authStoreHelper } from './store';
+import { getMessage } from '@/helpers/getMessage';
 
 import AuthLogonForm from './components/AuthLogonForm.vue';
 import AuthHelper from './components/AuthHelper.vue';
@@ -28,19 +29,20 @@ export default {
   },
   data: () => ({
     isLoading: false,
+    errorResponse: null,
   }),
   methods: {
     ...authStoreHelper.mapActions(['logon']),
 
     async onSubmit(form) {
       this.isLoading = true;
+      this.errorResponse = null;
 
       try {
         await this.logon(form);
         this.$router.push({ name: 'home' });
       } catch (e) {
-        // eslint-disable-next-line
-        console.log(e);
+        this.errorResponse = getMessage(e);
       }
 
       this.isLoading = false;

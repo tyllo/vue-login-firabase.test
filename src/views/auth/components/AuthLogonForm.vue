@@ -3,6 +3,7 @@
     title="Зарегистрироваться"
     submit-text="Создать"
     :loading="loading"
+    :error-response="errorResponse"
     style="width: 600px;"
     @submit="onSubmit"
   >
@@ -32,10 +33,10 @@
 
         <v-col cols="12" class="py-0">
           <v-text-field
-            v-model="form.username"
+            v-model="form.email"
             :rules="[rules.required, rules.email]"
             label="Адрес эл. почты"
-            name="username"
+            name="email"
             outlined
           />
         </v-col>
@@ -77,7 +78,7 @@ import AuthLayoutForm from './AuthLayoutForm.vue';
 const createDefaultData = () => ({
   name: '',
   surname: '',
-  username: '',
+  email: '',
   password: '',
   password_repeat: '',
 });
@@ -90,6 +91,7 @@ export default {
   },
   props: {
     loading: Boolean,
+    errorResponse: null,
   },
   data: () => ({
     form: createDefaultData(),

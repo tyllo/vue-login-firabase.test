@@ -3,6 +3,7 @@
     title="Задать новый пароль"
     :submit-text="'Задать'"
     :loading="loading"
+    :error-response="errorResponse"
     @submit="onSubmit"
   >
     <v-form ref="form">
@@ -55,6 +56,7 @@ export default {
   },
   props: {
     loading: Boolean,
+    errorResponse: null,
   },
   data: () => ({
     form: createDefaultData(),

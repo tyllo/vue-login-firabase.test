@@ -4,9 +4,16 @@
     class="d-flex flex-column"
     style="width: 400px; height: 480px;"
   >
-    <v-card-title class="mb-10">
+    <v-card-title class="pb-0">
       {{ title }}
     </v-card-title>
+
+    <v-card-subtitle class="my-0 py-0" style="min-height: 42px;">
+      <auth-error-message
+        v-if="errorResponse"
+        :type="errorResponse"
+      />
+    </v-card-subtitle>
 
     <v-card-text class="pa-4">
       <slot />
@@ -32,9 +39,14 @@
 </template>
 
 <script>
+import AuthErrorMessage from './AuthErrorMessage.vue';
+
 
 export default {
   name: 'auth-layout-form',
+  components: {
+    AuthErrorMessage,
+  },
   props: {
     title: {
       type: String,
@@ -45,6 +57,7 @@ export default {
       required: true,
     },
     loading: Boolean,
+    errorResponse: null,
   },
 };
 </script>

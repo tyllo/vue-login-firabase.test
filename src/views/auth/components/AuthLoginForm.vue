@@ -3,14 +3,15 @@
     title="Войти"
     submit-text="Войти"
     :loading="loading"
+    :error-response="errorResponse"
     @submit="onSubmit"
   >
     <v-form ref="form">
       <v-text-field
-        v-model="form.username"
+        v-model="form.email"
         :rules="[rules.required, rules.email]"
         label="Адрес эл. почты"
-        name="username"
+        name="email"
         outlined
       />
 
@@ -45,7 +46,7 @@ import TextFieldPassword from '@/components/forms/TextFieldPassword.vue';
 
 
 const createDefaultData = () => ({
-  username: '',
+  email: '',
   password: '',
   password_repeat: '',
 });
@@ -58,6 +59,7 @@ export default {
   },
   props: {
     loading: Boolean,
+    errorResponse: null,
   },
   data: () => ({
     form: createDefaultData(),
