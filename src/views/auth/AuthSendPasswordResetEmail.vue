@@ -1,8 +1,10 @@
 <template>
   <div>
-    <auth-reset-password-with-hash
+    <auth-send-password-reset-email
+      :success="isSuccess"
       :loading="isLoading"
       :error-response="errorResponse"
+      @go-to-login="onGoToLogin"
       @submit="onSubmit"
     />
 
@@ -18,29 +20,37 @@
 import { authStoreHelper } from './store';
 import { getMessage } from '@/helpers/getMessage';
 
-import AuthResetPasswordWithHash from './components/AuthResetPasswordWithHash.vue';
+import AuthSendPasswordResetEmail from './components/AuthSendPasswordResetEmail.vue';
 import AuthHelper from './components/AuthHelper.vue';
 
 
 export default {
-  name: 'view-auth-reset-password-with-hash',
+  name: 'view-auth-send-password-reset-email',
   components: {
-    AuthResetPasswordWithHash,
+    AuthSendPasswordResetEmail,
     AuthHelper,
   },
-  data: () => ({
-    isLoading: false,
-    errorResponse: null,
-  }),
+  inheritAttrs: false,
+  data() {
+    return {
+      isLoading: false,
+      isSuccess: false,
+      errorResponse: this.$attrs.errorResponse,
+    };
+  },
   methods: {
-    ...authStoreHelper.mapActions(['resetPasswordWithHash']),
+    ...authStoreHelper.mapActions(['sendPasswordResetEmail']),
 
+    onGoToLogin() {
+      this.$router.push({ name: 'auth.login' });
+    },
     async onSubmit(form) {
       this.isLoading = true;
+      this.errorResponse = null;
 
       try {
-        await this.resetPasswordWithHash(form);
-        this.$router.push({ name: 'home' });
+        await this.sendPasswordResetEmail(form);
+        this.isSuccess = true;
       } catch (e) {
         this.errorResponse = getMessage(e);
       }

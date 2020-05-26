@@ -19,9 +19,7 @@ import { authStoreHelper } from './store';
 export default {
   name: 'view-auth-verify-email',
   props: {
-    mode: String,
     oobCode: String,
-    lang: String,
   },
   data: () => ({
     isLoading: true,
@@ -32,7 +30,7 @@ export default {
   created() {
     const { oobCode } = this;
 
-    if (!oobCode || this.profile.emailVerified) {
+    if (this.profile.emailVerified) {
       this.$router.push({ name: 'home' });
     } else {
       this.onConfirmEmailVerification(oobCode);

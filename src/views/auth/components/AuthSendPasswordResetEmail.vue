@@ -34,7 +34,7 @@ const createDefaultData = () => ({
 });
 
 export default {
-  name: 'auth-reset-password-with-email',
+  name: 'auth-send-password-reset-email',
   components: {
     AuthLayoutForm,
   },

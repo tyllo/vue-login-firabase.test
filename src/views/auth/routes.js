@@ -24,21 +24,43 @@ const createRoutes = () => [
         path: '/reset-password',
         name: 'auth.reset-password',
         meta: { requiresAuth: false },
-        component: () => import(/* webpackChunkName: "auth.section" */ './AuthResetPasswordWithEmail.vue'),
-      },
-      {
-        path: '/reset-password/:hash',
-        name: 'auth.reset-password.hash',
         props: true,
-        meta: { requiresAuth: false },
-        component: () => import(/* webpackChunkName: "auth.section" */ './AuthResetPasswordWithHash.vue'),
+        component: () => import(/* webpackChunkName: "auth.section" */ './AuthSendPasswordResetEmail.vue'),
       },
       {
-        path: '/auth-verify-email',
-        name: 'auth.auth-verify-email',
+        path: '/email-link',
+        name: 'auth.email-link',
         meta: { requiresAuth: null },
-        props: ({ query: q }) => ({ mode: q.mode, oobCode: q.oobCode, lang: q.lang }),
+        beforeEnter(to, from, next) {
+          const { mode, oobCode } = to.query;
+          const params = { oobCode };
+
+          if (!oobCode) {
+            //
+          } else if (mode === 'verifyEmail') {
+            next({ name: 'auth.verify-email.code', params });
+            return;
+          } else if (mode === 'resetPassword') {
+            next({ name: 'auth.reset-password.code', params });
+            return;
+          }
+
+          next({ name: 'home' });
+        },
+      },
+      {
+        path: '/verify-email/:oobCode',
+        name: 'auth.verify-email.code',
+        meta: { requiresAuth: null },
+        props: true,
         component: () => import(/* webpackChunkName: "auth.section" */ './AuthVerifyEmail.vue'),
+      },
+      {
+        path: '/reset-password/:oobCode',
+        name: 'auth.reset-password.code',
+        meta: { requiresAuth: false },
+        props: true,
+        component: () => import(/* webpackChunkName: "auth.section" */ './AuthResetPassword.vue'),
       },
     ],
   },

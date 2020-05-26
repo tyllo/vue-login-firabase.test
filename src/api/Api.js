@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-// TODO: axios.CancelToken
-// TODO: onDownloadProgress
+// docs https://firebase.google.com/docs/reference/rest/auth
 
 class ApiService {
   constructor(key) {
     const axiosInstance = axios.create({
-      baseURL: process.env.VUE_APP_API_URL,
+      baseURL: 'https://identitytoolkit.googleapis.com/v1',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -50,6 +49,22 @@ class ApiService {
   confirmEmailVerification(params) {
     const data = { ...params };
     return this.api.post('accounts:update', data);
+  }
+
+  sendPasswordResetEmail(email) {
+    const data = { email, requestType: 'PASSWORD_RESET' };
+    const headers = { 'X-Firebase-Locale': 'ru' };
+    return this.api.post('accounts:sendOobCode', data, { headers });
+  }
+
+  verifyPasswordResetCode(oobCode) {
+    const data = { oobCode };
+    return this.api.post('accounts:resetPassword', data);
+  }
+
+  confirmPasswordReset(oobCode, newPassword) {
+    const data = { oobCode, newPassword };
+    return this.api.post('accounts:resetPassword', data);
   }
 }
 

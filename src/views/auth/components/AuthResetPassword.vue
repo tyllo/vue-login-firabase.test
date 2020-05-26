@@ -9,26 +9,18 @@
     <v-form ref="form">
       <text-field-password
         v-model="form.password"
-        :rules="[rules.required]"
-        label="Текущий пароль"
+        :rules="[rules.required, rules.min, rules.password]"
+        label="Новый пароль"
+        hint="Не менее 8 символов"
         name="password"
         outlined
       />
 
       <text-field-password
-        v-model="form.password_new"
-        :rules="[rules.required, rules.min, rules.password]"
-        label="Новый пароль"
-        hint="Не менее 8 символов"
-        name="password_new"
-        outlined
-      />
-
-      <text-field-password
-        v-model="form.password_new_repeat"
+        v-model="form.password_repeat"
         :rules="[passwordRepeatCheck]"
         label="Повторите новый пароль"
-        name="password_new_repeat"
+        name="password_repeat"
         outlined
       />
     </v-form>
@@ -44,12 +36,11 @@ import AuthLayoutForm from './AuthLayoutForm.vue';
 
 const createDefaultData = () => ({
   password: '',
-  password_new: '',
-  password_new_repeat: '',
+  password_repeat: '',
 });
 
 export default {
-  name: 'auth-reset-password-with-hash',
+  name: 'auth-reset-password',
   components: {
     TextFieldPassword,
     AuthLayoutForm,

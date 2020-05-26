@@ -19,6 +19,8 @@ const MESSAGES = {
   [TYPES.INVALID_PASSWORD]: 'Неверный пароль',
   [TYPES.USER_DISABLED]: 'Пользователь заблокирован',
   [TYPES.CUSTOM_UNKNOWN_ERROR]: 'Что-то произошло, попытайтесь еще раз',
+  [TYPES.INVALID_OOB_CODE]: 'Неверный код, запросите еще раз',
+  [TYPES.EXPIRED_OOB_CODE]: 'Код просрочен, запросите еще раз',
 };
 
 export default {

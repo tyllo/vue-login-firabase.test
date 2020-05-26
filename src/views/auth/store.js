@@ -3,8 +3,6 @@ import api from '@/api/Api';
 import { CookiesService } from '@/helpers/cookies.service';
 
 
-const timeout = () => new Promise((resolve) => setTimeout(resolve, 1500));
-
 const TYPES = Object.freeze({
   SET_TOKEN: 'SET_TOKEN',
   REMOVE_TOKEN: 'REMOVE_TOKEN',
@@ -53,17 +51,21 @@ const actions = {
     return api.sendEmailVerification(state.idToken);
   },
 
+  sendPasswordResetEmail(context, params) {
+    return api.sendPasswordResetEmail(params.email);
+  },
+
+  verifyPasswordResetCode(context, params) {
+    return api.verifyPasswordResetCode(params.oobCode);
+  },
+
+  confirmPasswordReset(context, params) {
+    return api.confirmPasswordReset(params.oobCode, params.password);
+  },
+
   async confirmEmailVerification({ dispatch }, params) {
     const response = await api.confirmEmailVerification(params);
     dispatch('getProfile', response, { root: true });
-  },
-
-  async resetPasswordWithEmail(context, params) {
-    await timeout(params);
-  },
-
-  async resetPasswordWithHash(context, params) {
-    await timeout(params);
   },
 };
 
