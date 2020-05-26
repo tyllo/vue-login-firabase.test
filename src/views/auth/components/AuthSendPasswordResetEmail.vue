@@ -1,26 +1,27 @@
 <template>
-  <auth-layout-form
-    title="Сбросить пароль"
-    :submit-text="success ? 'Вернуться' : 'Сбросить'"
-    :loading="loading"
-    :error-response="errorResponse"
-    @submit="onSubmit"
-  >
-    <v-form ref="form">
+  <v-form ref="form" @submit.prevent="onSubmit">
+    <auth-layout-form
+      title="Сбросить пароль"
+      :submit-text="success ? 'Вернуться' : 'Сбросить'"
+      :loading="loading"
+      :error-response="errorResponse"
+    >
       <v-text-field
         v-model="form.email"
         :rules="[rules.required, rules.email]"
         :disabled="success"
         label="Адрес эл. почты"
         name="email"
+        type="email"
         outlined
+        autofocus
       />
-    </v-form>
 
-    <div v-if="success">
-      Пароль сброшен, проверьте свою почту
-    </div>
-  </auth-layout-form>
+      <div v-if="success">
+        Пароль сброшен, проверьте свою почту
+      </div>
+    </auth-layout-form>
+  </v-form>
 </template>
 
 <script>

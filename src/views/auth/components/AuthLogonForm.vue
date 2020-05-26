@@ -1,15 +1,14 @@
 <template>
-  <auth-layout-form
-    title="Зарегистрироваться"
-    submit-text="Создать"
-    :loading="loading"
-    :error-response="errorResponse"
-    style="width: 600px;"
-    @submit="onSubmit"
-  >
-    <!--  -->
+  <v-form ref="form" @submit.prevent="onSubmit">
+    <auth-layout-form
+      title="Зарегистрироваться"
+      submit-text="Создать"
+      :loading="loading"
+      :error-response="errorResponse"
+      style="width: 600px;"
+    >
+      <!--  -->
 
-    <v-form ref="form">
       <v-row>
         <v-col cols="6" class="py-0">
           <v-text-field
@@ -18,6 +17,7 @@
             label="Имя"
             name="first_name"
             outlined
+            autofocus
           />
         </v-col>
 
@@ -62,10 +62,10 @@
           />
         </v-col>
       </v-row>
-    </v-form>
 
     <!--  -->
-  </auth-layout-form>
+    </auth-layout-form>
+  </v-form>
 </template>
 
 <script>

@@ -1,12 +1,11 @@
 <template>
-  <auth-layout-form
-    title="Задать новый пароль"
-    :submit-text="'Задать'"
-    :loading="loading"
-    :error-response="errorResponse"
-    @submit="onSubmit"
-  >
-    <v-form ref="form">
+  <v-form ref="form" @submit.prevent="onSubmit">
+    <auth-layout-form
+      title="Задать новый пароль"
+      :submit-text="'Задать'"
+      :loading="loading"
+      :error-response="errorResponse"
+    >
       <text-field-password
         v-model="form.password"
         :rules="[rules.required, rules.min, rules.password]"
@@ -14,6 +13,7 @@
         hint="Не менее 8 символов"
         name="password"
         outlined
+        autofocus
       />
 
       <text-field-password
@@ -23,8 +23,8 @@
         name="password_repeat"
         outlined
       />
-    </v-form>
-  </auth-layout-form>
+    </auth-layout-form>
+  </v-form>
 </template>
 
 <script>

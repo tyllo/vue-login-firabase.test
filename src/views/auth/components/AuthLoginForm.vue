@@ -1,18 +1,18 @@
 <template>
-  <auth-layout-form
-    title="Войти"
-    submit-text="Войти"
-    :loading="loading"
-    :error-response="errorResponse"
-    @submit="onSubmit"
-  >
-    <v-form ref="form">
+  <v-form ref="form" @submit.prevent="onSubmit">
+    <auth-layout-form
+      title="Войти"
+      submit-text="Войти"
+      :loading="loading"
+      :error-response="errorResponse"
+    >
       <v-text-field
         v-model="form.email"
         :rules="[rules.required, rules.email]"
         label="Адрес эл. почты"
         name="email"
         outlined
+        autofocus
       />
 
       <text-field-password
@@ -23,19 +23,19 @@
         name="password"
         outlined
       />
-    </v-form>
 
-    <template #before-submit>
-      <v-btn
-        :to="toResetRoute"
-        depressed text small
-        color="secondary"
-        type="buttom"
-      >
-        Забыли пароль?
-      </v-btn>
-    </template>
-  </auth-layout-form>
+      <template #before-submit>
+        <v-btn
+          :to="toResetRoute"
+          depressed text small
+          color="secondary"
+          type="buttom"
+        >
+          Забыли пароль?
+        </v-btn>
+      </template>
+    </auth-layout-form>
+  </v-form>
 </template>
 
 <script>
