@@ -21,6 +21,7 @@ const MESSAGES = {
   [TYPES.CUSTOM_UNKNOWN_ERROR]: 'Что-то произошло, попытайтесь еще раз',
   [TYPES.INVALID_OOB_CODE]: 'Неверный код, запросите еще раз',
   [TYPES.EXPIRED_OOB_CODE]: 'Код просрочен, запросите еще раз',
+  [TYPES.TOO_MANY_ATTEMPTS_TRY_LATER]: 'Слишком много попыток, попробуйте позже',
 };
 
 export default {
@@ -31,7 +32,8 @@ export default {
   computed: {
     message() {
       const { type } = this;
-      return MESSAGES[type] || MESSAGES[TYPES.CUSTOM_UNKNOWN_ERROR];
+      if (!type) return MESSAGES[TYPES.CUSTOM_UNKNOWN_ERROR];
+      return MESSAGES[type] || `Ощибка: ${type}`;
     },
   },
 };
