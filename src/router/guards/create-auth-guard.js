@@ -1,8 +1,8 @@
 
-const DEFAULT_ROUTE = { name: 'auth.home' };
+const DEFAULT_ROUTE = { name: 'home' };
 
 // eslint-disable-next-line consistent-return
-export const createAuthGuard2 = ({ store }) => (to, from, next) => {
+export const createAuthGuard = ({ store }) => (to, from, next) => {
   const match = to.matched.find((record) => 'requiresAuth' in record.meta);
   const authorized = store?.getters?.isAuthorized;
 

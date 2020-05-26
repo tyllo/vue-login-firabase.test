@@ -20,7 +20,7 @@ class PathCookies {
   }
 
   remove() {
-    VueCookies.remove(this.id, '/', this.baseDomain);
+    VueCookies.remove(this.keyName, '/', this.baseDomain);
   }
 }
 
