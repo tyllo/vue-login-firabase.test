@@ -2,6 +2,7 @@
   <div>
     <auth-logon-form
       :loading="isLoading"
+      :error-response="errorResponse"
       @submit="onSubmit"
     />
 

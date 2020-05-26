@@ -22,6 +22,7 @@ const MESSAGES = {
   [TYPES.INVALID_OOB_CODE]: 'Неверный код, запросите еще раз',
   [TYPES.EXPIRED_OOB_CODE]: 'Код просрочен, запросите еще раз',
   [TYPES.TOO_MANY_ATTEMPTS_TRY_LATER]: 'Слишком много попыток, попробуйте позже',
+  [TYPES.EMAIL_EXISTS]: 'Пользователь с таким email зарегистрирован',
 };
 
 export default {
